@@ -234,7 +234,7 @@ char8_t swtch(int index)
 	}
 }
 
-char (*fp[ARR])() = {
+char (*lfp[ARR])() = {
 []() { return ' '; },
 []() { return 'a'; },
 []() { return 'b'; },
@@ -292,7 +292,110 @@ char (*fp[ARR])() = {
 #endif // CASE50
 #endif // CASE 25
 };
-
+#pragma region straight functions
+char getChar() { return ' '; }
+char getChara() { return 'a'; }
+char getCharb() { return 'b'; }
+char getCharc() { return 'c'; }
+char getChard() { return 'd'; }
+char getChare() { return 'e'; }
+char getCharf() { return 'f'; }
+char getCharg() { return 'g'; }
+char getCharh() { return 'h'; }
+char getChari() { return 'i'; }
+char getCharj() { return 'j'; }
+char getChark() { return 'k'; }
+char getCharl() { return 'l'; }
+char getCharm() { return 'm'; }
+char getCharn() { return 'n'; }
+char getCharo() { return 'o'; }
+char getCharp() { return 'p'; }
+char getCharq() { return 'q'; }
+char getCharr() { return 'r'; }
+char getChars() { return 's'; }
+char getChart() { return 't'; }
+char getCharu() { return 'u'; }
+char getCharv() { return 'v'; }
+char getCharw() { return 'w'; }
+char getCharx() { return 'x'; }
+char getChary() { return 'y'; }
+char getCharz() { return 'z'; }
+char getCharA() { return 'A'; }
+char getCharB() { return 'B'; }
+char getCharC() { return 'C'; }
+char getCharD() { return 'D'; }
+char getCharE() { return 'E'; }
+char getCharF() { return 'F'; }
+char getCharG() { return 'G'; }
+char getCharH() { return 'H'; }
+char getCharI() { return 'I'; }
+char getCharJ() { return 'J'; }
+char getCharK() { return 'K'; }
+char getCharL() { return 'L'; }
+char getCharM() { return 'M'; }
+char getCharN() { return 'N'; }
+char getCharO() { return 'O'; }
+char getCharP() { return 'P'; }
+char getCharQ() { return 'Q'; }
+char getCharR() { return 'R'; }
+char getCharS() { return 'S'; }
+char getCharT() { return 'T'; }
+char getCharU() { return 'U'; }
+char getCharV() { return 'V'; }
+char getCharW() { return 'W'; }
+#pragma endregion
+char (*fp[ARR])() = {
+	getChar,
+	getChara,
+	getCharb,
+	getCharc,
+	getChard,
+	getChare,
+	getCharf,
+	getCharg,
+	getCharh,
+	getChari,
+	getCharj,
+	getChark,
+	getCharl,
+	getCharm,
+	getCharn,
+	getCharo,
+	getCharp,
+	getCharq,
+	getCharr,
+	getChars,
+	getChart,
+	getCharu,
+	getCharv,
+	getCharw,
+	getCharx,
+	getChary,
+	getCharz,
+	getCharA,
+	getCharB,
+	getCharC,
+	getCharD,
+	getCharE,
+	getCharF,
+	getCharG,
+	getCharH,
+	getCharI,
+	getCharJ,
+	getCharK,
+	getCharL,
+	getCharM,
+	getCharN,
+	getCharO,
+	getCharP,
+	getCharQ,
+	getCharR,
+	getCharS,
+	getCharT,
+	getCharU,
+	getCharV,
+	getCharW
+};
 
 int main()
 {
@@ -323,7 +426,19 @@ int main()
 	stop = std::chrono::high_resolution_clock::now();
 	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() / LOOPSIZE << "\n\n";
 
-	std::cout << "Testing Function Pointer Array timings.\nTimes: ";
+	std::cout << "Testing Lambda Function Pointer Array timings.\nTimes: ";
+	start = std::chrono::high_resolution_clock::now();
+	for (int i = 0; i < LOOPSIZE; ++i)
+	{
+		//auto step_start = std::chrono::high_resolution_clock::now();
+		lfp[rands[i]]();
+		//auto step_end = std::chrono::high_resolution_clock::now();
+		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
+	}
+	stop = std::chrono::high_resolution_clock::now();
+	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() / LOOPSIZE << "\n\n";
+
+	std::cout << "Testing Non-Lambda Function Pointer Array timings.\nTimes: ";
 	start = std::chrono::high_resolution_clock::now();
 	for (int i = 0; i < LOOPSIZE; ++i)
 	{
