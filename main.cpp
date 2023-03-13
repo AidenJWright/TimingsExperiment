@@ -233,14 +233,13 @@ char8_t swtch(int index)
 		break;
 	}
 }
-char8_t fnjmp(int index)
-{ 
-	char (*fp[ARR])() = {
-	[]() { return ' '; },
-	[]() { return 'a'; },
-	[]() { return 'b'; },
-	[]() { return 'c'; },
-	[]() { return 'd'; }
+
+char (*fp[ARR])() = {
+[]() { return ' '; },
+[]() { return 'a'; },
+[]() { return 'b'; },
+[]() { return 'c'; },
+[]() { return 'd'; }
 #ifdef CASE25
 	,
 	[]() { return 'e'; },
@@ -292,20 +291,21 @@ char8_t fnjmp(int index)
 	[]() { return 'W'; }
 #endif // CASE50
 #endif // CASE 25
-	};
-	return fp[index]();
-}
+};
+
 
 int main()
 {
 	std::srand(std::time(NULL));
+	int* rands = new int[LOOPSIZE];
+	for (int i = 0; i < LOOPSIZE; ++i) { rands[i] = std::rand() % ARR; }
 	std::cout << "Testing If Else timings.\nTimes: ";
 	auto start = std::chrono::high_resolution_clock::now();
 	for (int i = 0; i < LOOPSIZE; ++i)
 	{
-		auto step_start = std::chrono::high_resolution_clock::now();
-		ifel(std::rand() % ARR);
-		auto step_end = std::chrono::high_resolution_clock::now();
+		//auto step_start = std::chrono::high_resolution_clock::now();
+		ifel(rands[i]);
+		//auto step_end = std::chrono::high_resolution_clock::now();
 		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
 	auto stop = std::chrono::high_resolution_clock::now();
@@ -315,9 +315,9 @@ int main()
 	start = std::chrono::high_resolution_clock::now();
 	for (int i = 0; i < LOOPSIZE; ++i)
 	{
-		auto step_start = std::chrono::high_resolution_clock::now();
-		swtch(std::rand() % ARR);
-		auto step_end = std::chrono::high_resolution_clock::now();
+		//auto step_start = std::chrono::high_resolution_clock::now();
+		swtch(rands[i]);
+		//auto step_end = std::chrono::high_resolution_clock::now();
 		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
 	stop = std::chrono::high_resolution_clock::now();
@@ -327,9 +327,9 @@ int main()
 	start = std::chrono::high_resolution_clock::now();
 	for (int i = 0; i < LOOPSIZE; ++i)
 	{
-		auto step_start = std::chrono::high_resolution_clock::now();
-		fnjmp(std::rand() % ARR);
-		auto step_end = std::chrono::high_resolution_clock::now();
+		//auto step_start = std::chrono::high_resolution_clock::now();
+		fp[rands[i]]();
+		//auto step_end = std::chrono::high_resolution_clock::now();
 		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
 	stop = std::chrono::high_resolution_clock::now();
