@@ -1,8 +1,8 @@
 #include <iostream>
 #include <chrono>
 
-#define LOOPSIZE 100000
-#define TIMEFORMAT std::chrono::microseconds
+#define LOOPSIZE 10000000
+#define TIMEFORMAT std::chrono::nanoseconds
 #define CASE5 1
 #define CASE25 2
 #define CASE50 3
@@ -309,7 +309,7 @@ int main()
 		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
 	auto stop = std::chrono::high_resolution_clock::now();
-	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() << "\n\n";
+	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() / LOOPSIZE << "\n\n";
 
 	std::cout << "Testing Switch timings.\nTimes: ";
 	start = std::chrono::high_resolution_clock::now();
@@ -321,7 +321,7 @@ int main()
 		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
 	stop = std::chrono::high_resolution_clock::now();
-	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() << "\n\n";
+	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() / LOOPSIZE << "\n\n";
 
 	std::cout << "Testing Function Pointer Array timings.\nTimes: ";
 	start = std::chrono::high_resolution_clock::now();
@@ -333,5 +333,5 @@ int main()
 		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
 	stop = std::chrono::high_resolution_clock::now();
-	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() << "\n\n";
+	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() / LOOPSIZE << "\n\n";
 }
