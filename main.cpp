@@ -1,5 +1,7 @@
 #include <iostream>
 #include <chrono>
+//#include <vector>
+#include <random>
 
 #define LOOPSIZE 10000000
 #define TIMEFORMAT std::chrono::nanoseconds
@@ -401,54 +403,44 @@ int main()
 {
 	long long unsigned int noEscape = 0;
 	std::srand(std::time(NULL));
-	int* rands = new int[LOOPSIZE];
-	for (int i = 0; i < LOOPSIZE; ++i) { rands[i] = std::rand() % ARR; }
+	std::vector<int> rands;
+	std::default_random_engine rng{ std::random_device{}() };
+	std::uniform_int_distribution<int> dist{ 0, ARR - 1 };
+	for (int i = 0; i < LOOPSIZE; ++i) rands.push_back(dist(rng));
 	std::cout << "Testing If Else timings.\nTimes: ";
 	auto start = std::chrono::high_resolution_clock::now();
 	for (int i = 0; i < LOOPSIZE; ++i)
 	{
-		//auto step_start = std::chrono::high_resolution_clock::now();
 		noEscape += ifel(rands[i]);
-		//auto step_end = std::chrono::high_resolution_clock::now();
-		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
 	auto stop = std::chrono::high_resolution_clock::now();
-	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() / LOOPSIZE << "\n\n";
+	std::cout << "\nAvg: " << (double)(std::chrono::duration_cast<TIMEFORMAT>(stop - start).count()) / LOOPSIZE << "\n\n";
 
 	std::cout << "Testing Switch timings.\nTimes: ";
 	start = std::chrono::high_resolution_clock::now();
 	for (int i = 0; i < LOOPSIZE; ++i)
 	{
-		//auto step_start = std::chrono::high_resolution_clock::now();
 		noEscape += swtch(rands[i]);
-		//auto step_end = std::chrono::high_resolution_clock::now();
-		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
 	stop = std::chrono::high_resolution_clock::now();
-	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() / LOOPSIZE << "\n\n";
+	std::cout << "\nAvg: " << (double)(std::chrono::duration_cast<TIMEFORMAT>(stop - start).count()) / LOOPSIZE << "\n\n";
 
 	std::cout << "Testing Lambda Function Pointer Array timings.\nTimes: ";
 	start = std::chrono::high_resolution_clock::now();
 	for (int i = 0; i < LOOPSIZE; ++i)
 	{
-		//auto step_start = std::chrono::high_resolution_clock::now();
 		noEscape += lfp[rands[i]]();
-		//auto step_end = std::chrono::high_resolution_clock::now();
-		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
 	stop = std::chrono::high_resolution_clock::now();
-	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() / LOOPSIZE << "\n\n";
+	std::cout << "\nAvg: " << (double)(std::chrono::duration_cast<TIMEFORMAT>(stop - start).count()) / LOOPSIZE << "\n\n";
 
 	std::cout << "Testing Pure Function Pointer Array timings.\nTimes: ";
 	start = std::chrono::high_resolution_clock::now();
 	for (int i = 0; i < LOOPSIZE; ++i)
 	{
-		//auto step_start = std::chrono::high_resolution_clock::now();
 		noEscape += fp[rands[i]]();
-		//auto step_end = std::chrono::high_resolution_clock::now();
-		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
 	stop = std::chrono::high_resolution_clock::now();
-	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() / LOOPSIZE << "\n\n";
+	std::cout << "\nAvg: " << (double)(std::chrono::duration_cast<TIMEFORMAT>(stop - start).count()) / LOOPSIZE << "\n\n";
 	std::cout << "\n" << noEscape;
 }
