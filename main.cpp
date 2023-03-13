@@ -14,7 +14,7 @@
 #define ARR 5
 #endif // CASE_SIZE
 
-char8_t ifel(int index)
+char ifel(int index)
 {
 	if (index == 0)
 		return ' ';
@@ -121,7 +121,7 @@ char8_t ifel(int index)
 #endif // CASE50
 #endif // CASE25
 }
-char8_t swtch(int index)
+char swtch(int index)
 {
 	switch(index)
 	{
@@ -176,7 +176,7 @@ char8_t swtch(int index)
 		return 'w';
 	case 24:
 		return 'x';
-#ifdef CASE 50
+#ifdef CASE50
 	case 25:
 		return 'y';
 	case 26:
