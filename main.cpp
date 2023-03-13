@@ -399,6 +399,7 @@ char (*fp[ARR])() = {
 
 int main()
 {
+	long long unsigned int noEscape = 0;
 	std::srand(std::time(NULL));
 	int* rands = new int[LOOPSIZE];
 	for (int i = 0; i < LOOPSIZE; ++i) { rands[i] = std::rand() % ARR; }
@@ -407,7 +408,7 @@ int main()
 	for (int i = 0; i < LOOPSIZE; ++i)
 	{
 		//auto step_start = std::chrono::high_resolution_clock::now();
-		ifel(rands[i]);
+		noEscape += ifel(rands[i]);
 		//auto step_end = std::chrono::high_resolution_clock::now();
 		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
@@ -419,7 +420,7 @@ int main()
 	for (int i = 0; i < LOOPSIZE; ++i)
 	{
 		//auto step_start = std::chrono::high_resolution_clock::now();
-		swtch(rands[i]);
+		noEscape += swtch(rands[i]);
 		//auto step_end = std::chrono::high_resolution_clock::now();
 		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
@@ -431,22 +432,23 @@ int main()
 	for (int i = 0; i < LOOPSIZE; ++i)
 	{
 		//auto step_start = std::chrono::high_resolution_clock::now();
-		lfp[rands[i]]();
+		noEscape += lfp[rands[i]]();
 		//auto step_end = std::chrono::high_resolution_clock::now();
 		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
 	stop = std::chrono::high_resolution_clock::now();
 	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() / LOOPSIZE << "\n\n";
 
-	std::cout << "Testing Non-Lambda Function Pointer Array timings.\nTimes: ";
+	std::cout << "Testing Pure Function Pointer Array timings.\nTimes: ";
 	start = std::chrono::high_resolution_clock::now();
 	for (int i = 0; i < LOOPSIZE; ++i)
 	{
 		//auto step_start = std::chrono::high_resolution_clock::now();
-		fp[rands[i]]();
+		noEscape += fp[rands[i]]();
 		//auto step_end = std::chrono::high_resolution_clock::now();
 		//std::cout << std::chrono::duration_cast<TIMEFORMAT>(step_end - step_start).count() << ", ";
 	}
 	stop = std::chrono::high_resolution_clock::now();
 	std::cout << "\nAvg: " << std::chrono::duration_cast<TIMEFORMAT>(stop - start).count() / LOOPSIZE << "\n\n";
+	std::cout << "\n" << noEscape;
 }
